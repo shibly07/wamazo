@@ -1,5 +1,5 @@
 import NavBar from "@/components/NavBar";
-import MobileMenu from "@/components/MobileMenu";
+import HamburgerMenu from "@/components/HamburgerMenu";
 import ItemsRow from "@/components/ItemsRow";
 import PageLayout from "@/components/PageLayout";
 import ItemCard from "@/components/ItemCard";
@@ -10,7 +10,7 @@ import Error from "@/components/Error";
 
 export {
   NavBar,
-  MobileMenu,
+  HamburgerMenu,
   ItemCard,
   ItemsRow,
   PageLayout,

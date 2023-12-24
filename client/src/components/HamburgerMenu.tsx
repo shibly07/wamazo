@@ -3,6 +3,7 @@ import Box from "@mui/material/Box";
 import Drawer from "@mui/material/Drawer";
 import Button from "@mui/material/Button";
 import List from "@mui/material/List";
+import { category } from "@/utils/category";
 
 import ListItem from "@mui/material/ListItem";
 import ListItemButton from "@mui/material/ListItemButton";
@@ -13,7 +14,7 @@ import { Link } from "react-router-dom";
 
 type Anchor = "left";
 
-export default function MobileMenu() {
+export default function HamburgerMenu() {
   const [state, setState] = React.useState({
     top: false,
     left: false,
@@ -57,14 +58,7 @@ export default function MobileMenu() {
 
       <List>
         <h1 className="ml-4 font-bold text-lg mt-7 mb-3">All Categories</h1>
-        {[
-          "Smartphones",
-          "Laptops",
-          "Groceries",
-          "Home Decoration",
-          "Skincare",
-          "Fragrances",
-        ].map((text) => (
+        {category.map((text) => (
           <Link
             key={`categoryMenu-${text}`}
             to={`category/${text.split(" ").join("").toLowerCase()}`}
@@ -84,7 +78,7 @@ export default function MobileMenu() {
     <div>
       {(["left"] as const).map((anchor) => (
         <React.Fragment key={anchor}>
-          <Button onClick={toggleDrawer(anchor, true)} className="p-0">
+          <Button onClick={toggleDrawer(anchor, true)} className="p-0 gap-x-1">
             <GiHamburgerMenu className="text-white h-5 w-5 p-0" />
           </Button>
           <Drawer
@@ -99,10 +93,3 @@ export default function MobileMenu() {
     </div>
   );
 }
-
-// 0: "smartphones"
-// 1: "laptops"
-// 2: "fragrances"
-// 3: "skincare"
-// 4: "groceries"
-// 5: "home-decoration"
