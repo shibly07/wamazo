@@ -1,4 +1,4 @@
-import { Box, Button, Paper, TextField } from "@mui/material";
+import { Alert, Box, Button, Paper, TextField } from "@mui/material";
 import Radio from "@mui/material/Radio";
 import RadioGroup from "@mui/material/RadioGroup";
 import FormControlLabel from "@mui/material/FormControlLabel";
@@ -9,6 +9,7 @@ import axios from "axios";
 
 const SignUp = () => {
   const [signinOrSignup, setSigninOrSignup] = useState("signin");
+  const [error, setError] = useState<string | null>(null);
 
   const fullNameRef = useRef<HTMLDivElement>(null);
   const emailAddressRef = useRef<HTMLDivElement>(null);
@@ -20,29 +21,49 @@ const SignUp = () => {
   };
 
   const submitHandler = async () => {
-    const fullName = fullNameRef?.current?.children[0]?.children[0]?.value;
-    const email = emailAddressRef?.current?.children[0]?.children[0]?.value;
-    const password = passwordRef?.current?.children[0]?.children[0]?.value;
-    const confirmPassword =
-      confirmPasswordRef?.current?.children[0]?.children[0]?.value;
+    try {
+      const fullName = fullNameRef?.current?.children[0]?.children[0]?.value;
+      const email = emailAddressRef?.current?.children[0]?.children[0]?.value;
+      const password = passwordRef?.current?.children[0]?.children[0]?.value;
+      const confirmPassword =
+        confirmPasswordRef?.current?.children[0]?.children[0]?.value;
 
-    if (signinOrSignup === "signin") {
-      if (!email || !password) {
-        console.log("required signin");
-        return;
+      if (signinOrSignup === "signin") {
+        if (!email || !password) {
+          throw new Error("All fields are mandatory.");
+        }
       }
-    }
-    if (signinOrSignup === "signup") {
-      if (!fullName || !email || !password || !confirmPassword) {
-        console.log("required signup");
-        return;
+      if (signinOrSignup === "signup") {
+        if (!fullName || !email || !password || !confirmPassword) {
+          throw new Error("All fields are mandatory.");
+        }
       }
-    }
 
-    const databaseUrl = import.meta.env.VITE_DATABASE_BASE_URL;
-    const res = await axios.get(databaseUrl);
-    console.log(res.data);
-    console.log(databaseUrl);
+      setError(null);
+      const serverUrl = import.meta.env.VITE_DATABASE_BASE_URL;
+      await axios
+        .post(`${serverUrl}/signup`, {
+          name: fullName,
+          email,
+          password,
+          confirmPassword,
+        })
+        .catch(function (error) {
+          if (error.response) {
+            // The request was made and the server responded with a status code
+            // that falls out of the range of 2xx
+            setError(error.response.data.message);
+          }
+        });
+    } catch (error) {
+      let err;
+      if (typeof error === "string") {
+        err = error.toUpperCase();
+      } else if (error instanceof Error) {
+        err = error.message;
+      }
+      setError(err as string);
+    }
   };
 
   return (
@@ -59,7 +80,16 @@ const SignUp = () => {
                 aria-labelledby="demo-controlled-radio-buttons-group"
                 name="controlled-radio-buttons-group"
                 value={signinOrSignup}
-                onChange={handleChange}
+                onChange={(e) => {
+                  handleChange(e);
+                  setError(null);
+                  if (emailAddressRef.current) {
+                    emailAddressRef.current.children[0].children[0].value = "";
+                  }
+                  if (passwordRef.current) {
+                    passwordRef.current.children[0].children[0].value = "";
+                  }
+                }}
               >
                 <FormControlLabel
                   value="signup"
@@ -79,6 +109,7 @@ const SignUp = () => {
                     </>
                   }
                 />
+                <input type="text" name="" id="" />
                 <FormControlLabel
                   value="signin"
                   control={
@@ -114,6 +145,7 @@ const SignUp = () => {
                 <Box>
                   <p className="font-bold my-2">Email address</p>
                   <TextField
+                    type="email"
                     variant="outlined"
                     className="w-full"
                     ref={emailAddressRef}
@@ -141,7 +173,18 @@ const SignUp = () => {
                     />
                   </Box>
                 )}
-
+                <div className="relative h-8">
+                  <div className="absolute flex items-center h-full">
+                    {/* <Alert
+                      variant="outlined"
+                      severity="error"
+                      sx={{ height: "100%", padding: 0, margin: 0 }}
+                    >
+                      This is an error alert — check it out!
+                    </Alert> */}
+                    <p className="text-sm text-[#EF5350]">{error}</p>
+                  </div>
+                </div>
                 <Button
                   className="bg-yellow-400 w-full hover:bg-red-500"
                   variant="outlined"
@@ -151,7 +194,6 @@ const SignUp = () => {
                     color: "black",
                     paddingTop: "8px",
                     paddingBottom: "8px",
-                    marginTop: "1rem",
                     fontWeight: "bold",
                     textTransform: "capitalize",
                     "&:hover": {
@@ -164,18 +206,6 @@ const SignUp = () => {
                 >
                   Continue
                 </Button>
-                {/* <Button
-                  variant="contained"
-                  sx={{
-                    "&:hover": {
-                      backgroundColor: "black",
-                      borderColor: "#0062cc",
-                      boxShadow: "none",
-                    },
-                  }}
-                >
-                  Contained
-                </Button> */}
               </Box>
             </FormControl>
           </Paper>
