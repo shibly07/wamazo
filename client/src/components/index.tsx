@@ -1,4 +1,5 @@
 import NavBar from "@/components/NavBar";
+
 import HamburgerMenu from "@/components/HamburgerMenu";
 import ItemsRow from "@/components/ItemsRow";
 import PageLayout from "@/components/PageLayout";
