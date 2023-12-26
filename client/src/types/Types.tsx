@@ -1,3 +1,5 @@
+import React from "react";
+
 // Product properties
 export type Product = {
   id: number;
@@ -17,6 +19,11 @@ export type Product = {
 // Navbar
 export type NavBarProps = {
   products: Product[] | null;
+};
+// TextBox
+export type TextBoxProps = {
+  text: string;
+  ref?: React.RefObject<HTMLDivElement>;
 };
 // ItemCard
 export type ItemCardProps = {
