@@ -1,6 +1,7 @@
 const asyncHandler = require("express-async-handler");
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
+const validator = require("validator");
 
 const User = require("../models/userModel");
 const status = require("../utils/status");
@@ -24,6 +25,12 @@ const signupUser = asyncHandler(async (req, res) => {
   if (isUserAlreadyRegistered) {
     res.status(status.BAD_REQUEST.statusCode);
     throw new Error("User already registered!");
+  }
+
+  const isValidEmail = validator.isEmail(email);
+  if (!isValidEmail) {
+    res.status(status.BAD_REQUEST.statusCode);
+    throw new Error("Please provide an valid email.");
   }
 
   const hashedPassword = await bcrypt.hash(password, 10);
