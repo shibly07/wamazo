@@ -1,5 +1,12 @@
 import { NavBar, CircularLoading, Error } from "@/components";
-import { Category, HomePage, ProductDetailsPage, SearchItems } from "@/pages";
+import {
+  Category,
+  HomePage,
+  ProductDetailsPage,
+  SearchItems,
+  SignIn,
+  SignUp,
+} from "@/pages";
 
 import { Routes, Route } from "react-router-dom";
 
@@ -22,6 +29,8 @@ const App = () => {
           <NavBar products={products} />
           <Routes>
             <Route path="/" element={<HomePage products={products} />} />
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
             <Route path="/product/:id" element={<ProductDetailsPage />} />
             <Route path="/search/:searchItems" element={<SearchItems />} />
             <Route path="/category/:searchCategory" element={<Category />} />
