@@ -10,3 +10,6 @@ logs
 .lock-wscript
 /.idea/
 *.editorconfig
+
+.env
+.env.local
