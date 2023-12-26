@@ -108,6 +108,11 @@ const ProductDetailsPage = () => {
                     color: "black",
                     borderRadius: "10rem",
                     textTransform: "capitalize",
+                    "&:hover": {
+                      backgroundColor: "#FFD814",
+                      borderColor: "#0062cc",
+                      boxShadow: "none",
+                    },
                   }}
                   className="md:w-72"
                 >
