@@ -7,7 +7,7 @@ import {
   SignIn,
 } from "@/pages";
 
-import { Routes, Route } from "react-router-dom";
+import { Routes, Route, useLocation } from "react-router-dom";
 
 import useFetchData from "@/hooks/useFetchData";
 
@@ -17,6 +17,8 @@ const App = () => {
     property: "products",
   });
 
+  const { pathname: currentPageLocation } = useLocation();
+
   return (
     <>
       {error ? (
@@ -25,10 +27,10 @@ const App = () => {
         <CircularLoading />
       ) : (
         <>
-          <NavBar products={products} />
+          {currentPageLocation !== "/signin" && <NavBar products={products} />}
           <Routes>
-            <Route path="/" element={<HomePage products={products} />} />
             <Route path="/signin" element={<SignIn />} />
+            <Route path="/" element={<HomePage products={products} />} />
             <Route path="/product/:id" element={<ProductDetailsPage />} />
             <Route path="/search/:searchItems" element={<SearchItems />} />
             <Route path="/category/:searchCategory" element={<Category />} />
