@@ -43,7 +43,7 @@ export default function HamburgerMenu() {
       onClick={toggleDrawer(anchor, false)}
       onKeyDown={toggleDrawer(anchor, false)}
     >
-      <div className="bg-[rgb(35,47,62)] text-white pl-4 pr-6 pb-4">
+      <div className="bg-nav-secondary text-white pl-4 pr-6 pb-4">
         <div className="pt-4 flex justify-end">
           <button className="flex justify-center items-center gap-x-2">
             <span>Sign in</span> <IoPersonOutline className="h-5 w-5" />

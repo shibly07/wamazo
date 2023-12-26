@@ -57,7 +57,7 @@ const ProductDetailsPage = () => {
               {!product?.discountPercentage ? null : (
                 <div className="flex flex-col gap-y-3">
                   <p className=" text-3xl flex gap-x-3">
-                    <span className="text-[#CC0C39]">{`-${product?.discountPercentage.toFixed(
+                    <span className="text-text-deal">{`-${product?.discountPercentage.toFixed(
                       1
                     )}%`}</span>
                     <span className="font-bold">

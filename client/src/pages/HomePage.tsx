@@ -5,7 +5,7 @@ const HomePage = ({ products }: HomePageProps) => {
   return (
     <>
       {!products ? null : (
-        <div className=" bg-[#E6E6E6] min-h-screen flex flex-col gap-4">
+        <div className=" bg-bg-white min-h-screen flex flex-col gap-4">
           <PageLayout>
             <div className="flex flex-col gap-y-5">
               <ItemsRow

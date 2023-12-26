@@ -22,7 +22,7 @@ const NavBar = ({ products }: NavBarProps) => {
   };
   return (
     <>
-      <nav className="bg-[#0F1111] pt-3 pb-4 md:flex md:items-center md:px-6">
+      <nav className="bg-nav-primary pt-3 pb-4 md:flex md:items-center md:px-6">
         <div className="text-white flex justify-between pr-3">
           <div className="flex items-center">
             {/* Mobile hamburger menu */}
